@@ -182,3 +182,17 @@ export const resetPassword = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 }
+
+
+
+export const getMe = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        return res.status(200).json(user);
+
+
+    } catch (error) {
+        console.log("Error in forgotPassword controller:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+}
