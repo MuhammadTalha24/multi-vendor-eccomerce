@@ -4,6 +4,10 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { dbConnection } from './utils/dbConnection.js';
 import authRoutes from './routes/authRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+import multerMiddleware from './middlewares/multerMiddleware.js';
+
+
 
 
 dotenv.config();
@@ -16,7 +20,17 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+
+
+
+
 app.use('/api/auth', authRoutes);
+app.use('/api/product', productRoutes);
+
+
+
+// Global error handler
+app.use(multerMiddleware);
 
 
 dbConnection().then(() => {
