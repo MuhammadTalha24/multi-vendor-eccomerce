@@ -6,7 +6,7 @@ import cloudinary from '../utils/cloudinary.js';
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: 'my_uploads', // Cloudinary folder name
+        folder: 'my_uploads',
         allowed_formats: ['jpg', 'png', 'jpeg'], // allowed file types
         transformation: [{ width: 500, height: 500, crop: 'limit' }] // optional
     },

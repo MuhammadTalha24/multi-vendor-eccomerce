@@ -131,3 +131,81 @@ export const deleteProduct = async (req, res) => {
 
     }
 }
+
+
+// export const getAllProducts = async (req, res) => {
+//     try {
+//         const products = await Product.find();
+//         return res.status(200).json({ success: true, products });
+//     } catch (error) {
+//         console.log("Error in creating product", error);
+//         res.status(500).json({ message: "Internal Server Error" });
+//     }
+// }
+
+
+export const getAllProducts = async (req, res) => {
+    try {
+
+        const minPrice = req.query.minPrice;
+        const maxPrice = req.query.maxPrice;
+        const minStock = req.query.minStock;
+        const maxStock = req.query.maxStock;
+        const category = req.query.category;
+
+        const limit = Number(req.query.limit) || 3;
+        const page = req.query.page || 1;
+
+        const skip = (page - 1) * limit;
+
+        const filter = {};
+
+        if (minPrice || maxPrice) {
+            filter.price = {};
+
+            if (minPrice) filter.price.$gte = Number(minPrice);
+            if (maxPrice) filter.price.$lte = Number(maxPrice);
+        }
+
+
+        if (minStock || maxStock) {
+            filter.stock = {};
+
+            if (minStock) filter.stock.$gte = Number(minStock);
+            if (maxStock) filter.stock.$lte = Number(maxStock);
+        }
+
+        if (category) {
+            filter.category = category;
+        }
+
+        const products = await Product.find(filter).skip(skip).limit(limit);
+
+        return res.status(200).json({
+            success: true,
+            products,
+            page
+        })
+
+    } catch (error) {
+        console.log("Error in creating product", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+
+
+
+export const getProductDetail = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const product = await Product.findById(id);
+        if (!product) {
+            return res.status(400).json({ message: "Product Not Found!" })
+        }
+        return res.status(200).json({ success: true, product });
+    } catch (error) {
+        console.log("Error in creating product", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
