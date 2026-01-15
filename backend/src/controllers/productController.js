@@ -133,15 +133,6 @@ export const deleteProduct = async (req, res) => {
 }
 
 
-// export const getAllProducts = async (req, res) => {
-//     try {
-//         const products = await Product.find();
-//         return res.status(200).json({ success: true, products });
-//     } catch (error) {
-//         console.log("Error in creating product", error);
-//         res.status(500).json({ message: "Internal Server Error" });
-//     }
-// }
 
 
 export const getAllProducts = async (req, res) => {

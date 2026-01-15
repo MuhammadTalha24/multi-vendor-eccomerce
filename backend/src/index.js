@@ -5,6 +5,7 @@ import cors from 'cors';
 import { dbConnection } from './utils/dbConnection.js';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+import reviewRoutes from './routes/reviewRoutes.js';
 import multerMiddleware from './middlewares/multerMiddleware.js';
 
 
@@ -22,15 +23,16 @@ app.use(cookieParser());
 
 
 
+app.use(multerMiddleware);
 
 
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
+app.use('/api/review', reviewRoutes);
 
 
 
-// Global error handler
-app.use(multerMiddleware);
+
 
 
 dbConnection().then(() => {
