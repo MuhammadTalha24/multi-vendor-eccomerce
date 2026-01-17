@@ -6,7 +6,10 @@ import { dbConnection } from './utils/dbConnection.js';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 import multerMiddleware from './middlewares/multerMiddleware.js';
+import errorMiddleware from './middlewares/errorMiddleware.js';
+
 
 
 
@@ -26,13 +29,14 @@ app.use(cookieParser());
 app.use(multerMiddleware);
 
 
+
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/review', reviewRoutes);
+app.use('/api/order', orderRoutes);
 
 
-
-
+app.use(errorMiddleware);
 
 
 dbConnection().then(() => {
